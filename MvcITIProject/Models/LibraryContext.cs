@@ -68,17 +68,20 @@ public partial class LibraryContext : DbContext
 
             entity.HasOne(d => d.Cat).WithMany(p => p.Books)
                 .HasForeignKey(d => d.CatId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
+                .OnDelete(DeleteBehavior.SetNull)
+                .IsRequired(false)
                 .HasConstraintName("FK_Book_Category");
 
             entity.HasOne(d => d.Publisher).WithMany(p => p.Books)
                 .HasForeignKey(d => d.PublisherId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
+                .OnDelete(DeleteBehavior.SetNull)
+                .IsRequired(false)
                 .HasConstraintName("FK_Book_Publisher");
 
             entity.HasOne(d => d.ShelfCodeNavigation).WithMany(p => p.Books)
                 .HasForeignKey(d => d.ShelfCode)
-                .OnDelete(DeleteBehavior.ClientSetNull)
+                .OnDelete(DeleteBehavior.SetNull)
+                .IsRequired(false)
                 .HasConstraintName("FK_Book_Shelf");
 
             entity.HasMany(d => d.Authors).WithMany(p => p.Books)
@@ -86,11 +89,13 @@ public partial class LibraryContext : DbContext
                     "BookAuthor",
                     r => r.HasOne<Author>().WithMany()
                         .HasForeignKey("AuthorId")
-                        .OnDelete(DeleteBehavior.ClientSetNull)
+                        .OnDelete(DeleteBehavior.Cascade)
+                        //.IsRequired(false)
                         .HasConstraintName("FK_Book_Author_Author"),
                     l => l.HasOne<Book>().WithMany()
                         .HasForeignKey("BookId")
-                        .OnDelete(DeleteBehavior.ClientSetNull)
+                        //.IsRequired(false)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .HasConstraintName("FK_Book_Author_Book"),
                     j =>
                     {
@@ -213,7 +218,8 @@ public partial class LibraryContext : DbContext
 
             entity.HasOne(d => d.FloorNumNavigation).WithMany(p => p.Shelves)
                 .HasForeignKey(d => d.FloorNum)
-                .OnDelete(DeleteBehavior.ClientSetNull)
+                .OnDelete(DeleteBehavior.SetNull)
+                .IsRequired(false)
                 .HasConstraintName("FK_Shelf_Floor");
         });
     }

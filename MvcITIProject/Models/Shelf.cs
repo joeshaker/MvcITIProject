@@ -7,7 +7,7 @@ public partial class Shelf
 {
     public string Code { get; set; } = null!;
 
-    public int FloorNum { get; set; }
+    public int ?FloorNum { get; set; }
 
     public virtual ICollection<Book> Books { get; set; } = new List<Book>();
 
