@@ -15,7 +15,7 @@ public partial class Book
 
     public string ShelfCode { get; set; } = null!;
 
-    public virtual ICollection<Borrowing> Borrowings { get; set; } = new List<Borrowing>();
+    //public virtual ICollection<Borrowing> Borrowings { get; set; } = new List<Borrowing>();
 
     public virtual Category Cat { get; set; } = null!;
 
