@@ -9,11 +9,11 @@ public partial class Book
 
     public string Title { get; set; } = null!;
 
-    public int CatId { get; set; }
+    public int ?CatId { get; set; }
 
-    public int PublisherId { get; set; }
+    public int ?PublisherId { get; set; }
 
-    public string ShelfCode { get; set; } = null!;
+    public string ?ShelfCode { get; set; } = null!;
 
     //public virtual ICollection<Borrowing> Borrowings { get; set; } = new List<Borrowing>();
 
@@ -23,5 +23,5 @@ public partial class Book
 
     public virtual Shelf ShelfCodeNavigation { get; set; } = null!;
 
-    public virtual ICollection<Author> Authors { get; set; } = new List<Author>();
+    public virtual ICollection<Author> ?Authors { get; set; } = new List<Author>();
 }
