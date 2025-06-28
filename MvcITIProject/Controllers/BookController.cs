@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MvcITIProject.Models;
+using MvcITIProject.ModelView;
 using MvcITIProject.UnitOfWorks;
 using System.Collections.Generic;
+using static System.Reflection.Metadata.BlobBuilder;
 
 namespace MvcITIProject.Controllers
 {
@@ -15,8 +17,19 @@ namespace MvcITIProject.Controllers
 
         public IActionResult Index()
         {
-            List < Book > AllBooks= _unitofwork.Bookrepo.GetAll();
-            return View(AllBooks);
+            List <Book> AllBooks= _unitofwork.Bookrepo.GetAll();
+            var viewModel = AllBooks.Select(b => new BookModelView
+            {
+                Title = b.Title,
+                CatId = b.CatId,
+                PublisherId = b.PublisherId,
+                ShelfCode = b.ShelfCode,
+                Cat = b.Cat,
+                Publisher = b.Publisher,
+                ShelfCodeNavigation = b.ShelfCodeNavigation,
+                Authors = b.Authors
+            }).ToList();
+            return View(viewModel);
         }
     }
 }

@@ -1,5 +1,5 @@
-﻿@model IEnumerable<MvcITIProject.ModelView.BookModelView;
->
+﻿@model List<MvcITIProject.ModelView.BookModelView>
+
 
 @{
     ViewData["Title"] = "Index";
@@ -13,36 +13,31 @@
 <table class="table">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Title)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CatId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PublisherId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ShelfCode)
-            </th>
+            <th>Title</th>
+            <th>Category</th>
+            <th>Publisher</th>
+            <th>Shelf</th>
+
             <th></th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
         <tr>
+
             <td>
                 @Html.DisplayFor(modelItem => item.Title)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CatId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PublisherId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ShelfCode)
-            </td>
+                <td>
+                    @item.Cat?.CatName
+                </td>
+                <td>
+                    @item.Publisher?.Name
+                </td>
+                <td>
+                    @item.ShelfCodeNavigation?.Code
+                </td>
+
             <td>
                 @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
                 @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
