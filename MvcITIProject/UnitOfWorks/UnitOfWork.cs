@@ -1,4 +1,5 @@
 ﻿using MvcITIProject.Models;
+using MvcITIProject.Repositories;
 
 namespace MvcITIProject.UnitOfWorks
 {
@@ -11,6 +12,20 @@ namespace MvcITIProject.UnitOfWorks
             _context = context;
             
         }
+        private BookRepository _bookRepo;
+
+        public BookRepository Bookrepo
+        {
+            get
+            {
+                if (_bookRepo == null)
+                    _bookRepo = new BookRepository(_context);
+
+                return _bookRepo;
+            }
+        }
+
+
 
         public void SaveChanges()
         {
