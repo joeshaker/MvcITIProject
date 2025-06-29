@@ -13,7 +13,6 @@ namespace MvcITIProject.UnitOfWorks
             
         }
         private BookRepository _bookRepo;
-
         public BookRepository Bookrepo
         {
             get
@@ -25,7 +24,16 @@ namespace MvcITIProject.UnitOfWorks
             }
         }
 
-
+        private PublisherRepository _publisherRepo;
+        public PublisherRepository Publisherrepo
+        {
+            get
+            {
+                if (_publisherRepo == null)
+                    _publisherRepo = new PublisherRepository(_context);
+                return _publisherRepo;
+            }
+        }
 
         public void SaveChanges()
         {
