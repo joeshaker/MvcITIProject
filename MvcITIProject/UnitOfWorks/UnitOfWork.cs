@@ -1,4 +1,5 @@
-﻿using MvcITIProject.Models;
+﻿using MvcITIProject.IRepositories;
+using MvcITIProject.Models;
 using MvcITIProject.Repositories;
 
 namespace MvcITIProject.UnitOfWorks
@@ -7,6 +8,7 @@ namespace MvcITIProject.UnitOfWorks
     {
         LibraryContext _context;
 
+        private readonly Dictionary<Type, object> _repositories = new();
         public UnitOfWork(LibraryContext context)
         {
             _context = context;
@@ -23,6 +25,27 @@ namespace MvcITIProject.UnitOfWorks
 
                 return _bookRepo;
             }
+        }
+
+        private ShelfRepository _shelfRepo;
+        public ShelfRepository ShelfRepo
+        {
+            get
+            {
+                if (_shelfRepo == null)
+                    _shelfRepo = new ShelfRepository(_context);
+                return _shelfRepo;
+            }
+        }
+
+        public IGenericRepositries<T> Repositries<T>() where T : class
+        {
+            if (_repositories.TryGetValue(typeof(T), out var repo))
+                return (IGenericRepositries<T>)repo;
+
+            var newRepo = new GenericRepositries<T>(_context);
+            _repositories.Add(typeof(T), newRepo);
+            return newRepo;
         }
 
 
