@@ -1,4 +1,5 @@
-﻿using MvcITIProject.Models;
+﻿using MvcITIProject.IRepositories;
+using MvcITIProject.Models;
 using MvcITIProject.Repositories;
 
 namespace MvcITIProject.UnitOfWorks
@@ -14,7 +15,8 @@ namespace MvcITIProject.UnitOfWorks
         }
         private BookRepository _bookRepo;
 
-        public BookRepository Bookrepo
+        private readonly Dictionary<Type, object> _repositories = new();
+        public BookRepository BookRepo
         {
             get
             {
@@ -25,7 +27,15 @@ namespace MvcITIProject.UnitOfWorks
             }
         }
 
+        public IGenericRepositries<T> Repository<T>() where T : class
+        {
+            if (_repositories.TryGetValue(typeof(T), out var repo))
+                return (IGenericRepositries<T>)repo;
 
+            var newRepo = new GenericRepositries<T>(_context);
+            _repositories.Add(typeof(T), newRepo);
+            return newRepo;
+        }
 
         public void SaveChanges()
         {
