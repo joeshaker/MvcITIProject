@@ -13,6 +13,12 @@ namespace MvcITIProject.Repositories
         {
             return _context.Books.Count(b => b.PublisherId == publisherId);
         }
+        public List<Book> GetBooksByPublisherId(int publisherId)
+        {
+            return _context.Books
+                .Where(b => b.PublisherId == publisherId)
+                .ToList();
+        }
 
         internal object Select(Func<object, PublisherModelView> value)
         {

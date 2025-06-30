@@ -15,6 +15,22 @@
             <dd class="col-sm-10">@Model.Name</dd>
             <dt class="col-sm-2">Number of Books</dt>
             <dd class="col-sm-10">@Model.BookCount</dd>
+            <dt class="col-sm-2">BOOKS</dt>
+            <dd class="col-sm-10">
+                <ul>
+                    @if (Model.Books != null && Model.Books.Any())
+                    {
+                        foreach (var book in Model.Books)
+                        {
+                            <li>@book.Title</li>
+                        }
+                    }
+                    else
+                    {
+                        <li>No books available for this publisher.</li>
+                    }
+                </ul>
+            </dd>
         </dl>
     </div>
     <div>

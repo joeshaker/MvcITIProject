@@ -133,6 +133,7 @@ namespace MvcITIProject.Controllers
         // GET: publisher/Details/5
         public IActionResult Details(int id)
         {
+            var books = _unitofwork.Publisherrepo.GetBooksByPublisherId(id);
             var publisher = _unitofwork.Publisherrepo.GetById(id);
             if (publisher == null)
             {
@@ -143,7 +144,8 @@ namespace MvcITIProject.Controllers
             {
                 Id = publisher.Id,
                 Name = publisher.Name,
-                BookCount = _unitofwork.Publisherrepo.GetBookCount(publisher.Id)
+                BookCount = _unitofwork.Publisherrepo.GetBookCount(publisher.Id),
+                Books = books
             };
 
             return View(viewModel);
