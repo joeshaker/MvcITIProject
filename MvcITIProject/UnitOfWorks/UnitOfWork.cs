@@ -15,6 +15,15 @@ namespace MvcITIProject.UnitOfWorks
             
         }
         private BookRepository _bookRepo;
+        private IGenericRepositries<Floor> _floors;
+
+        public IGenericRepositries<Floor> Floors
+        {
+            get
+            {
+                return _floors ??= new GenericRepositries<Floor>(_context);
+            }
+        }
 
 
         private CategoryRepository _categoryRepo;
