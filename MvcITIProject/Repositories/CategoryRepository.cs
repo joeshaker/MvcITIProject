@@ -11,7 +11,7 @@ namespace MvcITIProject.Repositories
         }
         public int CountBooksInCategory(int categoryId)
         {
-            return _context.Books.Count(b => b.Id == categoryId);
+            return _context.Books.Count(b => b.CatId == categoryId);
 
         }
         // hellper methods for pagination and searching
