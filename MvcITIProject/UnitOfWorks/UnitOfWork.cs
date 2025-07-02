@@ -13,6 +13,9 @@ namespace MvcITIProject.UnitOfWorks
             
         }
         private BookRepository _bookRepo;
+
+        private CategoryRepository _categoryRepo;
+
         public BookRepository Bookrepo
         {
             get
@@ -23,6 +26,16 @@ namespace MvcITIProject.UnitOfWorks
                 return _bookRepo;
             }
         }
+        public CategoryRepository CategoryRepo
+        {
+            get
+            {
+                if (_categoryRepo == null)
+                    _categoryRepo = new CategoryRepository(_context);
+                return _categoryRepo;
+            }
+        }
+
 
         private PublisherRepository _publisherRepo;
         public PublisherRepository Publisherrepo
