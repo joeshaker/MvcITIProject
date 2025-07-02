@@ -2,6 +2,7 @@
 
 namespace MvcITIProject.Repositories
 {
+
     public class ShelfRepository : GenericRepositries<Shelf>
     {
         public ShelfRepository(LibraryContext context) : base(context)
@@ -20,5 +21,6 @@ namespace MvcITIProject.Repositories
                 _context.Set<Shelf>().Remove(shelf);
             }
         }
+
     }
 }

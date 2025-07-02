@@ -16,9 +16,11 @@ namespace MvcITIProject.UnitOfWorks
         }
         private BookRepository _bookRepo;
 
+
         private CategoryRepository _categoryRepo;
 
         public BookRepository Bookrepo
+
         {
             get
             {
@@ -37,6 +39,7 @@ namespace MvcITIProject.UnitOfWorks
                 return _categoryRepo;
             }
         }
+
 
         private ShelfRepository _shelfRepo;
         public ShelfRepository ShelfRepo
@@ -59,7 +62,6 @@ namespace MvcITIProject.UnitOfWorks
             return newRepo;
         }
 
-
         private PublisherRepository _publisherRepo;
         public PublisherRepository Publisherrepo
         {
@@ -70,6 +72,7 @@ namespace MvcITIProject.UnitOfWorks
                 return _publisherRepo;
             }
         }
+
 
         public void SaveChanges()
         {
