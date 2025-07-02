@@ -199,7 +199,9 @@
         </nav>
     </header>
 
-    @if (ViewBag.ShowBreadcrumb != false)
+    @* @if (ViewBag.ShowBreadcrumb != false)
+  @*   @if (ViewBag.ShowBreadcrumb != false)
+
     {
         <div class="container">
             <nav aria-label="breadcrumb">
@@ -222,7 +224,7 @@
                 </ol>
             </nav>
         </div>
-    }
+    } *@
 
     <div class="container">
         <!-- Alert Messages -->
@@ -253,22 +255,24 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted mt-5 py-4">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6">
-                    <p>&copy; 2025 - Library Management System</p>
-                </div>
-                <div class="col-md-6 text-end">
-                    <a asp-area="" asp-controller="Home" asp-action="Privacy" class="text-muted me-3">Privacy Policy</a>
-                    <a asp-area="" asp-controller="Home" asp-action="Contact" class="text-muted me-3">Contact Us</a>
-                    <a asp-area="" asp-controller="Help" asp-action="Index" class="text-muted">Help Center</a>
-                </div>
-            </div>
-        </div>
-    </footer>
+    @* <footer class="footer text-muted mt-5 py-4"> *@
+    @*     <div class="container"> *@
+    @*         <div class="row"> *@
+    @*             <div class="col-md-6"> *@
+    @*                 <p>&copy; 2025 - Library Management System</p> *@
+    @*             </div> *@
+    @*             <div class="col-md-6 text-end"> *@
+    @*                 <a asp-area="" asp-controller="Home" asp-action="Privacy" class="text-muted me-3">Privacy Policy</a> *@
+    @*                 <a asp-area="" asp-controller="Home" asp-action="Contact" class="text-muted me-3">Contact Us</a> *@
+    @*                 <a asp-area="" asp-controller="Help" asp-action="Index" class="text-muted">Help Center</a> *@
+    @*             </div> *@
+    @*         </div> *@
+    @*     </div> *@
+    @* </footer> *@
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)

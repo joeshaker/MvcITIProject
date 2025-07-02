@@ -14,7 +14,10 @@ namespace MvcITIProject
             // Add services to the container.
             builder.Services.AddControllersWithViews();
             //Add Connectionstring and UnitOfWork
+
             builder.Services.AddDbContext<LibraryContext>(op => op.UseSqlServer(builder.Configuration.GetConnectionString("Basio")).UseLazyLoadingProxies());
+
+
             builder.Services.AddScoped<UnitOfWork>();
             builder.Services.AddScoped<AuthorRepository>();
 

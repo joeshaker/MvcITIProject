@@ -1,0 +1,70 @@
+﻿@model MvcITIProject.ModelView.BookModelView
+
+@{
+    ViewData["Title"] = "Add Book";
+}
+
+<div class="container py-5 mb-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <div class="card shadow-lg rounded">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0"><i class="bi bi-plus-circle me-2"></i>Add New Book</h4>
+                </div>
+                <div class="card-body">
+                    <form asp-action="AddBook">
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+
+                        <div class="mb-3">
+                            <label asp-for="Title" class="form-label"></label>
+                            <input asp-for="Title" class="form-control" placeholder="Enter book title" />
+                            <span asp-validation-for="Title" class="text-danger small"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="CatId" class="form-label">Category</label>
+                            <select asp-for="CatId" asp-items="Model.Categories" class="form-select">
+                                <option value="">-- Select Category --</option>
+                            </select>
+                            <span asp-validation-for="CatId" class="text-danger small"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="PublisherId" class="form-label">Publisher</label>
+                            <select asp-for="PublisherId" asp-items="Model.Publishers" class="form-select">
+                                <option value="">-- Select Publisher --</option>
+                            </select>
+                            <span asp-validation-for="PublisherId" class="text-danger small"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="ShelfCode" class="form-label">Shelf</label>
+                            <select asp-for="ShelfCode" asp-items="Model.Shelves" class="form-select">
+                                <option value="">-- Select Shelf --</option>
+                            </select>
+                            <span asp-validation-for="ShelfCode" class="text-danger small"></span>
+                        </div>
+
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-success">
+                                <i class="bi bi-save me-1"></i> Create
+                            </button>
+                        </div>
+                    </form>
+                    <div class="mt-3 text-end">
+                        <a asp-action="Index" class="btn btn-secondary btn-sm">
+                            <i class="bi bi-arrow-left me-1"></i> Back to List
+                        </a>
+                    </div>
+                </div>
+               
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

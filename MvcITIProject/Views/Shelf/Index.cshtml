@@ -1,0 +1,48 @@
+﻿@model List<MvcITIProject.Models.Shelf>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1 class="text-center my-4">All Shelves</h1>
+
+<div class="text-end mb-3">
+    <a asp-action="AddViewShelf" class="btn btn-primary">➕ Create New Shelf</a>
+</div>
+
+<table class="table table-bordered table-striped text-center align-middle shadow rounded">
+    <thead class="table-dark">
+        <tr>
+            <th scope="col">Code</th>
+            <th scope="col">Floor Number</th>
+            <th scope="col">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Shelf shelf in Model)
+        {
+            <tr>
+                <td>@shelf.Code</td>
+                <td>@shelf.FloorNum</td>
+                <td>
+                    <a asp-action="EditShelfView" asp-route-code="@shelf.Code" class="btn btn-warning me-1">✏️ Edit</a>
+                    @* <a asp-action="Details" asp-route-code="@shelf.Code" class="btn btn-info me-1">ℹ️ Details</a> *@
+                    <a asp-action="DeleteView" asp-route-code="@shelf.Code" class="btn btn-danger">🗑️ Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<div class="d-flex justify-content-center mt-3">
+    <nav>
+        <ul class="pagination">
+            @for (int i = 1; i <= (int)ViewBag.TotalPages; i++)
+            {
+                <li class="page-item @(ViewBag.CurrentPage == i ? "active" : "")">
+                    <a class="page-link" href="@Url.Action("Index", new { pageNumber = i })">@i</a>
+                </li>
+            }
+        </ul>
+    </nav>
+</div>
+
+
