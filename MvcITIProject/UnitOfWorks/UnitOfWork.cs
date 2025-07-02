@@ -8,6 +8,7 @@ namespace MvcITIProject.UnitOfWorks
     {
         LibraryContext _context;
 
+        private readonly Dictionary<Type, object> _repositories = new();
         public UnitOfWork(LibraryContext context)
         {
             _context = context;
@@ -15,8 +16,11 @@ namespace MvcITIProject.UnitOfWorks
         }
         private BookRepository _bookRepo;
 
-        private readonly Dictionary<Type, object> _repositories = new();
-        public BookRepository BookRepo
+
+        private CategoryRepository _categoryRepo;
+
+        public BookRepository Bookrepo
+
         {
             get
             {
@@ -26,8 +30,29 @@ namespace MvcITIProject.UnitOfWorks
                 return _bookRepo;
             }
         }
+        public CategoryRepository CategoryRepo
+        {
+            get
+            {
+                if (_categoryRepo == null)
+                    _categoryRepo = new CategoryRepository(_context);
+                return _categoryRepo;
+            }
+        }
 
-        public IGenericRepositries<T> Repository<T>() where T : class
+
+        private ShelfRepository _shelfRepo;
+        public ShelfRepository ShelfRepo
+        {
+            get
+            {
+                if (_shelfRepo == null)
+                    _shelfRepo = new ShelfRepository(_context);
+                return _shelfRepo;
+            }
+        }
+
+        public IGenericRepositries<T> Repositries<T>() where T : class
         {
             if (_repositories.TryGetValue(typeof(T), out var repo))
                 return (IGenericRepositries<T>)repo;
@@ -36,6 +61,18 @@ namespace MvcITIProject.UnitOfWorks
             _repositories.Add(typeof(T), newRepo);
             return newRepo;
         }
+
+        private PublisherRepository _publisherRepo;
+        public PublisherRepository Publisherrepo
+        {
+            get
+            {
+                if (_publisherRepo == null)
+                    _publisherRepo = new PublisherRepository(_context);
+                return _publisherRepo;
+            }
+        }
+
 
         public void SaveChanges()
         {

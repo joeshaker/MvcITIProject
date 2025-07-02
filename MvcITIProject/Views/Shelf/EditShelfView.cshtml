@@ -1,0 +1,25 @@
+﻿@model MvcITIProject.ModelView.ShelfModelView.AddShelfViewModel
+@{
+    ViewData["Title"] = "EditShelfView";
+}
+
+<h1>EditShelfView</h1>
+
+<form asp-action="EditShelf" method="post">
+    <div class="form-group">
+        <label asp-for="Code"></label>
+        <input asp-for="Code" class="form-control" readonly />
+        <span asp-validation-for="Code" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="FloorNum"></label>
+        <select asp-for="FloorNum" asp-items="Model.FloorOptions" class="form-control">
+            <option value="">Select Floor</option>
+        </select>
+        <span asp-validation-for="FloorNum" class="text-danger"></span>
+    </div>
+    <div class="form-group mt-3">
+        <button type="submit" class="btn btn-primary">Update Shelf</button>
+        <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+    </div>
+</form>
