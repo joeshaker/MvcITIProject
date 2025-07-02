@@ -9,7 +9,6 @@ namespace MvcITIProject.UnitOfWorks
         LibraryContext _context;
         private readonly Dictionary<Type, object> _repositories = new();
 
-        private readonly Dictionary<Type, object> _repositories = new();
         public UnitOfWork(LibraryContext context)
         {
             _context = context;

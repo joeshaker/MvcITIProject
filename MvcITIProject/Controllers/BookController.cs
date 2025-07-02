@@ -19,7 +19,7 @@ namespace MvcITIProject.Controllers
 
         public IActionResult Index(string searchTerm = "", int pageNumber = 1, int pageSize = 5)
         {
-            List<Book> allBooks = _unitofwork.BookRepo.GetAll();
+            List<Book> allBooks = _unitofwork.Bookrepo.GetAll();
 
             if (!string.IsNullOrWhiteSpace(searchTerm))
             {
@@ -55,14 +55,14 @@ namespace MvcITIProject.Controllers
 
         public IActionResult Delete(int id)
         {
-            var book = _unitofwork.BookRepo.GetById(id);
+            var book = _unitofwork.Bookrepo.GetById(id);
             if (book == null) return NotFound();
             return View(book);
 
         }
         public IActionResult DeleteConfirm(int id)
         {
-            _unitofwork.BookRepo.Delete(id);
+            _unitofwork.Bookrepo.Delete(id);
             _unitofwork.SaveChanges();
             TempData["SuccessMessage"] = "Book deleted successfully.";
             return RedirectToAction("Index");
@@ -97,7 +97,7 @@ namespace MvcITIProject.Controllers
                 ShelfCode = newbook.ShelfCode,
             };
 
-            _unitofwork.BookRepo.Add(book);
+            _unitofwork.Bookrepo.Add(book);
             _unitofwork.SaveChanges();
 
             TempData["SuccessMessage"] = "Book added successfully.";
@@ -106,7 +106,7 @@ namespace MvcITIProject.Controllers
 
         public IActionResult Edit(int id)
         {
-            var book = _unitofwork.BookRepo.GetById(id);
+            var book = _unitofwork.Bookrepo.GetById(id);
 
             if (book == null)
                 return NotFound();
@@ -137,14 +137,14 @@ namespace MvcITIProject.Controllers
             {
                 return View("Edit", Editedbook);
             }
-            _unitofwork.BookRepo.Update(Editedbook);
+            _unitofwork.Bookrepo.Update(Editedbook);
             _unitofwork.SaveChanges();
             TempData["SuccessMessage"] = "Book Edited successfully.";
             return RedirectToAction("index");
         }
         public IActionResult Details(int id)
         {
-            var book = _unitofwork.BookRepo.GetById(id);
+            var book = _unitofwork.Bookrepo.GetById(id);
             if (book == null) return NotFound();
 
             var model = new BookModelView
