@@ -1,4 +1,5 @@
-﻿using MvcITIProject.Models;
+﻿using MvcITIProject.IRepositories;
+using MvcITIProject.Models;
 using MvcITIProject.Repositories;
 
 namespace MvcITIProject.UnitOfWorks
@@ -13,6 +14,7 @@ namespace MvcITIProject.UnitOfWorks
             
         }
         private BookRepository _bookRepo;
+        private IGenericRepositries<Floor> _floors;
 
         public BookRepository Bookrepo
         {
@@ -22,6 +24,13 @@ namespace MvcITIProject.UnitOfWorks
                     _bookRepo = new BookRepository(_context);
 
                 return _bookRepo;
+            }
+        }
+        public IGenericRepositries<Floor> Floors
+        {
+            get
+            {
+                return _floors ??= new GenericRepositries<Floor>(_context);
             }
         }
 
