@@ -1,0 +1,30 @@
+﻿@model MvcITIProject.ModelView.ShelfModelView.AddShelfViewModel
+@{
+    ViewData["Title"] = "DeleteView";
+}
+
+<h1>Are you sure to Delete this Shelf</h1>
+
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">Confirm Delete</h5>
+
+        <div class="mb-3">
+            <label class="form-label">Code:</label>
+            <p class="form-control-plaintext">@Model.Code</p>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Floor Number:</label>
+            <p class="form-control-plaintext">@Model.FloorNum</p>
+        </div>
+
+        <form method="post"  asp-action="DeleteShelf">
+            <input type="hidden" name="code" value="@Model.Code" />
+            <button type="submit" class="btn btn-danger">Delete</button>
+            <a asp-action="Index" class="btn btn-secondary ms-2">Cancel</a>
+        </form>
+    </div>
+</div>
+
+
