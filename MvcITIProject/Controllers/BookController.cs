@@ -31,5 +31,10 @@ namespace MvcITIProject.Controllers
             }).ToList();
             return View(viewModel);
         }
+        public IActionResult Delete(int id)
+        {
+            _unitofwork.Bookrepo.Delete(id);
+            return RedirectToAction("index");
+        }
     }
 }
