@@ -3,278 +3,297 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Library Management System</title>
-    <script type="importmap"></script>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/MvcITIProject.styles.css" asp-append-version="true" />
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+    <title>@ViewData["Title"]</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%232c3e50'><path d='M1 2.828c.885-.37 2.154-.769 3.388-.893 1.33-.134 2.458.063 3.112.752v9.746c-.935-.53-2.12-.603-3.213-.493-1.18.12-2.37.461-3.287.811zm7.5-.141c.654-.689 1.782-.886 3.112-.752 1.234.124 2.503.523 3.388.893v9.923c-.918-.35-2.107-.692-3.287-.81-1.094-.111-2.278-.039-3.213.492zM8 1.783C7.015.936 5.587.81 4.287.94c-1.514.153-3.042.672-3.994 1.105A.5.5 0 0 0 0 2.5v11a.5.5 0 0 0 .707.455c.882-.4 2.303-.881 3.68-1.02 1.409-.142 2.59.087 3.223.877a.5.5 0 0 0 .78 0c.633-.79 1.814-1.019 3.222-.877 1.378.139 2.8.62 3.681 1.02A.5.5 0 0 0 16 13.5v-11a.5.5 0 0 0-.293-.455c-.952-.433-2.48-.952-3.994-1.105C10.413.809 8.985.936 8 1.783'/></svg>">
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css">
+
+    <!-- Custom CSS -->
     <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2c3e50;
+            --accent-color: #e74c3c;
+            --light-color: #f8f9fa;
+            --dark-color: #212529;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f5f5;
+        }
+
         .navbar-brand {
-            font-weight: bold;
-            color: #2c3e50 !important;
+            font-weight: 700;
+            font-size: 1.5rem;
         }
 
-        .nav-link {
-            font-weight: 500;
+        .navbar {
+            background-color: var(--secondary-color) !important;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
 
-        .dropdown-item {
-            padding: 8px 20px;
+        .sidebar {
+            background-color: white;
+            min-height: calc(100vh - 56px);
+            box-shadow: 2px 0 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 56px;
         }
 
-            .dropdown-item i {
-                width: 20px;
-                margin-right: 8px;
+            .sidebar .nav-link {
+                color: var(--dark-color);
+                border-radius: 0.25rem;
+                margin: 0.25rem 0;
+                font-weight: 500;
             }
 
-        .search-form {
-            max-width: 400px;
+                .sidebar .nav-link:hover,
+                .sidebar .nav-link.active {
+                    background-color: var(--primary-color);
+                    color: white;
+                }
+
+                .sidebar .nav-link i {
+                    margin-right: 0.5rem;
+                    width: 20px;
+                    text-align: center;
+                }
+
+        .main-content {
+            padding: 2rem;
+            background-color: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+            margin-bottom: 2rem;
         }
 
-        .navbar-nav .nav-link:hover {
-            color: #007bff !important;
+        .page-header {
+            border-bottom: 1px solid #eee;
+            padding-bottom: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+
+        .btn-outline-primary {
+            color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+
+            .btn-outline-primary:hover {
+                background-color: var(--primary-color);
+                color: white;
+            }
+
+        .table th {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+
+        .card {
+            border: none;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+        }
+
+            .card:hover {
+                transform: translateY(-5px);
+            }
+
+        .card-header {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+
+        .fixed-footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            padding: 15px 0;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+            z-index: 1030;
+        }
+
+        .content-container {
+            padding-bottom: 80px;
+        }
+
+        /* Toast notifications */
+        .toast-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1100;
         }
     </style>
+
+    @RenderSection("Styles", required: false)
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom shadow-sm mb-3">
+        <nav class="navbar navbar-expand-sm navbar-dark">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
-                    <i class="fas fa-book-open me-2"></i>Library System
+                <a class="navbar-brand" asp-controller="Home" asp-action="Index">
+                    <i class="bi bi-book-half"></i> LibraryPro
                 </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-lg-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1 me-3">
+                <div class="collapse navbar-collapse" id="navbarCollapse">
+                    <ul class="navbar-nav ms-auto">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">
-                                <i class="fas fa-home me-1"></i>Home
+                            <a class="nav-link" asp-controller="Home" asp-action="Index">
+                                <i class="bi bi-house-door"></i> Home
                             </a>
                         </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-dark" href="#" id="catalogDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="fas fa-books me-1"></i>Catalog
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="catalogDropdown">
-                                <li>
-                                    <a class="dropdown-item" asp-area="" asp-controller="Books" asp-action="Index">
-                                        <i class="fas fa-list"></i>All Books
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" asp-area="" asp-controller="Books" asp-action="NewArrivals">
-                                        <i class="fas fa-star"></i>New Arrivals
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" asp-area="" asp-controller="Books" asp-action="Popular">
-                                        <i class="fas fa-fire"></i>Popular Books
-                                    </a>
-                                </li>
-                                <li><hr class="dropdown-divider"></li>
-                                <li><h6 class="dropdown-header">Browse by Category</h6></li>
-                                <li>
-                                    <a class="dropdown-item" asp-area="" asp-controller="Books" asp-action="Index" asp-route-category="Fiction">
-                                        <i class="fas fa-magic"></i>Fiction
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" asp-area="" asp-controller="Books" asp-action="Index" asp-route-category="Non-Fiction">
-                                        <i class="fas fa-graduation-cap"></i>Non-Fiction
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" asp-area="" asp-controller="Books" asp-action="Index" asp-route-category="Science">
-                                        <i class="fas fa-flask"></i>Science & Technology
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" asp-area="" asp-controller="Books" asp-action="Index" asp-route-category="History">
-                                        <i class="fas fa-landmark"></i>History
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" asp-area="" asp-controller="Books" asp-action="Index" asp-route-category="Children">
-                                        <i class="fas fa-child"></i>Children's Books
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" asp-area="" asp-controller="Books" asp-action="Index" asp-route-category="Reference">
-                                        <i class="fas fa-book-open"></i>Reference
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-dark" href="#" id="servicesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="fas fa-cogs me-1"></i>Services
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="servicesDropdown">
-                                <li>
-                                    <a class="dropdown-item" asp-area="" asp-controller="Loans" asp-action="Index">
-                                        <i class="fas fa-hand-holding"></i>My Loans
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" asp-area="" asp-controller="Reservations" asp-action="Index">
-                                        <i class="fas fa-bookmark"></i>My Reservations
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" asp-area="" asp-controller="Account" asp-action="History">
-                                        <i class="fas fa-history"></i>Borrowing History
-                                    </a>
-                                </li>
-                                <li><hr class="dropdown-divider"></li>
-                                <li>
-                                    <a class="dropdown-item" asp-area="" asp-controller="Books" asp-action="Renew">
-                                        <i class="fas fa-redo"></i>Renew Books
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" asp-area="" asp-controller="Books" asp-action="Reserve">
-                                        <i class="fas fa-calendar-check"></i>Reserve Books
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Help" asp-action="Index">
-                                <i class="fas fa-question-circle me-1"></i>Help
-                            </a>
-                        </li>
-                    </ul>
-
-                    <form class="d-flex search-form me-3" asp-controller="Books" asp-action="Search" method="get">
-                        <div class="input-group">
-                            <input class="form-control" type="search" name="query" placeholder="Search books, authors..." aria-label="Search" value="@ViewBag.SearchQuery">
-                            <button class="btn btn-outline-primary" type="submit">
-                                <i class="fas fa-search"></i>
-                            </button>
-                        </div>
-                    </form>
-
-                    <ul class="navbar-nav">
-                        @if (User.Identity != null && User.Identity.IsAuthenticated)
-                        {
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle text-dark" href="#" id="accountDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fas fa-user-circle me-1"></i>@User.Identity.Name
-                                </a>
-                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="accountDropdown">
-                                    <li>
-                                        <a class="dropdown-item" asp-area="" asp-controller="Account" asp-action="Profile">
-                                            <i class="fas fa-user"></i>My Profile
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" asp-area="" asp-controller="Account" asp-action="Settings">
-                                            <i class="fas fa-cog"></i>Settings
-                                        </a>
-                                    </li>
-                                    <li><hr class="dropdown-divider"></li>
-                                    <li>
-                                        <a class="dropdown-item" asp-area="" asp-controller="Account" asp-action="Logout">
-                                            <i class="fas fa-sign-out-alt"></i>Logout
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                        }
-                        else
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Login">
-                                    <i class="fas fa-sign-in-alt me-1"></i>Login
-                                </a>
-                            </li>
-                        }
+                        @* <partial name="_LoginPartial" /> *@
                     </ul>
                 </div>
             </div>
         </nav>
     </header>
 
-    @* @if (ViewBag.ShowBreadcrumb != false)
-  @*   @if (ViewBag.ShowBreadcrumb != false)
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-md-3 col-lg-2 d-md-block sidebar collapse" id="sidebarMenu">
+                <div class="position-sticky pt-3">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link @(ViewContext.RouteData.Values["Controller"].ToString() == "Home" ? "active" : "")"
+                               asp-controller="Home" asp-action="Index">
+                                <i class="bi bi-house-door-fill"></i>Home
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link @(ViewContext.RouteData.Values["Controller"].ToString() == "Category" ? "active" : "")"
+                               asp-controller="Category" asp-action="Index">
+                                <i class="bi bi-collection"></i> Categories
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link @(ViewContext.RouteData.Values["Controller"].ToString() == "Book" ? "active" : "")"
+                               asp-controller="Book" asp-action="Index">
+                                <i class="bi bi-book"></i> Books
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link @(ViewContext.RouteData.Values["Controller"].ToString() == "Author" ? "active" : "")"
+                               asp-controller="Author" asp-action="ShowAll">
+                                <i class="bi bi-person-badge"></i> Authors
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link @(ViewContext.RouteData.Values["Controller"].ToString() == "Floor" ? "active" : "")"
+                               asp-controller="Floor" asp-action="Index">
+                                <i class="bi bi-bar-chart-steps"></i> Floor
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link @(ViewContext.RouteData.Values["Controller"].ToString() == "Publisher" ? "active" : "")"
+                               asp-controller="Publisher" asp-action="Index">
+                                <i class="bi bi-file-person"></i> Publisher
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link @(ViewContext.RouteData.Values["Controller"].ToString() == "Shelf" ? "active" : "")"
+                               asp-controller="Shelf" asp-action="Index">
+                                <i class="bi bi-bookshelf"></i> Shelf
+                            </a>
+                        </li>
+                        <li class="nav-item mt-3">
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link @(ViewContext.RouteData.Values["Controller"].ToString() == "Login" ? "active" : "")"
+                               asp-controller="Login" asp-action="Index">
+                                <i class="bi bi-box-arrow-in-right"></i> Login
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link @(ViewContext.RouteData.Values["Controller"].ToString() == "Logout" ? "active" : "")"
+                               asp-controller="Logout" asp-action="Index">
+                                <i class="bi bi-box-arrow-right"></i> Logout
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link @(ViewContext.RouteData.Values["Controller"].ToString() == "SignUp" ? "active" : "")"
+                               asp-controller="SignUp" asp-action="Index">
+                                <i class="bi bi-door-open"></i> Sign Up
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
 
-    {
-        <div class="container">
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Home</a></li>
-                    @if (ViewBag.BreadcrumbItems != null)
-                    {
-                        @foreach (var item in ViewBag.BreadcrumbItems)
-                        {
-                            if (item.IsActive)
-                            {
-                                <li class="breadcrumb-item active" aria-current="page">@item.Title</li>
-                            }
-                            else
-                            {
-                                <li class="breadcrumb-item"><a href="@item.Url">@item.Title</a></li>
-                            }
-                        }
-                    }
-                </ol>
-            </nav>
+            <!-- Main Content -->
+            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+                <div class="main-content content-container">
+                    @RenderBody()
+                </div>
+            </main>
         </div>
-    } *@
-
-    <div class="container">
-        <!-- Alert Messages -->
-        @if (TempData["SuccessMessage"] != null)
-        {
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                <i class="fas fa-check-circle me-2"></i>@TempData["SuccessMessage"]
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        }
-        @if (TempData["ErrorMessage"] != null)
-        {
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                <i class="fas fa-exclamation-circle me-2"></i>@TempData["ErrorMessage"]
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        }
-        @if (TempData["InfoMessage"] != null)
-        {
-            <div class="alert alert-info alert-dismissible fade show" role="alert">
-                <i class="fas fa-info-circle me-2"></i>@TempData["InfoMessage"]
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        }
-
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
     </div>
 
-    @* <footer class="footer text-muted mt-5 py-4"> *@
-    @*     <div class="container"> *@
-    @*         <div class="row"> *@
-    @*             <div class="col-md-6"> *@
-    @*                 <p>&copy; 2025 - Library Management System</p> *@
-    @*             </div> *@
-    @*             <div class="col-md-6 text-end"> *@
-    @*                 <a asp-area="" asp-controller="Home" asp-action="Privacy" class="text-muted me-3">Privacy Policy</a> *@
-    @*                 <a asp-area="" asp-controller="Home" asp-action="Contact" class="text-muted me-3">Contact Us</a> *@
-    @*                 <a asp-area="" asp-controller="Help" asp-action="Index" class="text-muted">Help Center</a> *@
-    @*             </div> *@
-    @*         </div> *@
-    @*     </div> *@
-    @* </footer> *@
+    <!-- Footer -->
+    <footer class="footer mt-auto py-4 bg-dark text-white">
+        <div class="container-fluid">
+            <div class="row">
+                <!-- Library Information -->
+                <div class="col-lg-4 mb-4 mb-lg-0">
+                    <h5 class="text-primary mb-3">
+                        <i class="bi bi-book-half me-2"></i>LibraryPro
+                    </h5>
+                </div>
+                <div class="col-lg-4">
+                    <div class="d-flex justify-content-center align-items-center  pt-3">
+                        <span class="small">&copy; @DateTime.Now.Year LibraryPro. All rights reserved.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
 
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
-    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- DataTables -->
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
+
+    <!-- Custom Scripts -->
+    <script>
+        $(document).ready(function() {
+            $('.data-table').DataTable({
+                responsive: true,
+                language: {
+                    search: "_INPUT_",
+                    searchPlaceholder: "Search...",
+                }
+            });
+
+            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+            var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl)
+            });
+        });
+    </script>
+
+    @RenderSection("Scripts", required: false)
 </body>
 </html>

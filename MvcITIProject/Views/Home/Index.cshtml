@@ -1,8 +1,56 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Home";
+    ViewData["Icon"] = "bi bi-house-door";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="hero-section bg-light py-5 mb-5">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <h1 class="display-4 fw-bold mb-4">Discover Your Next Great Read</h1>
+                <p class="lead mb-4">Explore our vast collection of books, e-resources, and more at your community library.</p>
+                <div class="d-flex gap-3">
+                    <a asp-controller="Book" asp-action="Index" class="btn btn-primary btn-lg px-4">
+                        <i class="bi bi-search me-2"></i>Browse Catalog
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-6 d-none d-lg-block">
+                <img src="https://images.unsplash.com/photo-1507842217343-583bb7270b66?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80"
+                     alt="Library shelves with books" class="img-fluid rounded shadow">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row g-4 mb-5">
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body text-center p-4">
+                    <i class="bi bi-book text-primary fs-1 mb-3"></i>
+                    <h3>Extensive Collection</h3>
+                    <p>Access thousands of books across all genres for all age groups.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body text-center p-4">
+                    <i class="bi bi-laptop text-primary fs-1 mb-3"></i>
+                    <h3>Digital Resources</h3>
+                    <p>E-books, audiobooks</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body text-center p-4">
+                    <i class="bi bi-calendar-event text-primary fs-1 mb-3"></i>
+                    <h3>Events & Programs</h3>
+                    <p>Join our book clubs, workshops, and children's story times.</p>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
