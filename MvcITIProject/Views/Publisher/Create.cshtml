@@ -17,6 +17,11 @@
                     <span asp-validation-for="Name" class="text-danger"></span>
                 </div>
                 <div class="mb-3">
+                    <label asp-for="Address" class="form-label">Publisher Address</label>
+                    <input asp-for="Address" class="form-control" />
+                    <span asp-validation-for="Address" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
                     <button type="submit" class="btn btn-primary">Create</button>
                     <a asp-action="Index" class="btn btn-secondary">Back to List</a>
                 </div>

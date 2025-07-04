@@ -24,6 +24,7 @@ namespace MvcITIProject.ModelView
         [Required(ErrorMessage = "Shelf is required")]
         [Display(Name = "Shelf")]
         public string ShelfCode { get; set; } = string.Empty;
+        public string ? BookLink { get; set; }= string.Empty;
         public virtual Category ?Cat { get; set; } = null!;
 
         public virtual Publisher? Publisher { get; set; } = null!;
