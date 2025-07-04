@@ -9,5 +9,7 @@ public partial class Publisher
 
     public string Name { get; set; } = null!;
 
+    public string? Address { get; set; } = null!;
+
     public virtual ICollection<Book> Books { get; set; } = new List<Book>();
 }

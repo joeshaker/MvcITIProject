@@ -48,7 +48,8 @@ namespace MvcITIProject.Controllers
             {
                 Id = c.Id,
                 Name = c.Name,
-                BookCount = _unitofwork.Publisherrepo.GetBookCount(c.Id)
+                BookCount = _unitofwork.Publisherrepo.GetBookCount(c.Id),
+                Address = c.Address,
             }).ToList();
 
             ViewBag.PageNumber = page;
@@ -116,7 +117,8 @@ namespace MvcITIProject.Controllers
             {
                 Id = publisher.Id,
                 Name = publisher.Name,
-                BookCount = _unitofwork.Publisherrepo.GetBookCount(publisher.Id)
+                BookCount = _unitofwork.Publisherrepo.GetBookCount(publisher.Id),
+                Address=publisher.Address,
             };
 
             return View(viewModel);
@@ -145,7 +147,8 @@ namespace MvcITIProject.Controllers
                 Id = publisher.Id,
                 Name = publisher.Name,
                 BookCount = _unitofwork.Publisherrepo.GetBookCount(publisher.Id),
-                Books = books
+                Books = books,
+                Address = publisher.Address,
             };
 
             return View(viewModel);

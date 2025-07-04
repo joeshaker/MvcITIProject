@@ -1,0 +1,33 @@
+﻿@model MvcITIProject.ModelView.BookAuthorModelView
+
+@{
+    ViewData["Title"] = "Assign Authors to Book";
+}
+
+<div class="container mt-4">
+    <h3 class="text-primary mb-3">Assign Authors to Book</h3>
+
+    <form asp-action="AddAuthorsToBook" method="post">
+        <div class="mb-3">
+            <label class="form-label">Book</label>
+            <select asp-for="BookId" asp-items="Model.Books" class="form-select"></select>
+            <span asp-validation-for="BookId" class="text-danger small"></span>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Authors</label>
+            <select asp-for="SelectedAuthorIds" asp-items="Model.Authors" class="form-select" multiple></select>
+            <span asp-validation-for="SelectedAuthorIds" class="text-danger small"></span>
+        </div>
+
+        <button type="submit" class="btn btn-success">
+            <i class="bi bi-plus-circle me-1"></i> Assign
+        </button>
+    </form>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
