@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace MvcITIProject.Models;
 
-public partial class LibraryContext : DbContext
+public partial class LibraryContext : IdentityDbContext<ApplicationUser>
 {
     public LibraryContext()
     {
@@ -41,6 +42,9 @@ public partial class LibraryContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+
+        base.OnModelCreating(modelBuilder); // 🔥 This is essential for Identity entities
+
         modelBuilder.UseCollation("SQL_Latin1_General_CP1_CI_AS");
 
         modelBuilder.Entity<Author>(entity =>
@@ -272,5 +276,4 @@ public partial class LibraryContext : DbContext
     //    OnModelCreatingPartial(modelBuilder);
     //}
 
-    partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
 }
