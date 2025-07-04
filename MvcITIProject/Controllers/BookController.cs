@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using MvcITIProject.Models;
 using MvcITIProject.ModelView;
@@ -19,7 +20,7 @@ namespace MvcITIProject.Controllers
 
         public IActionResult Index(string searchTerm = "", int pageNumber = 1, int pageSize = 5)
         {
-            List<Book> allBooks = _unitofwork.BookRepo.GetAll();
+            List<Book> allBooks = _unitofwork.Bookrepo.GetAll();
 
             if (!string.IsNullOrWhiteSpace(searchTerm))
             {
@@ -55,14 +56,14 @@ namespace MvcITIProject.Controllers
 
         public IActionResult Delete(int id)
         {
-            var book = _unitofwork.BookRepo.GetById(id);
+            var book = _unitofwork.Bookrepo.GetById(id);
             if (book == null) return NotFound();
             return View(book);
 
         }
         public IActionResult DeleteConfirm(int id)
         {
-            _unitofwork.BookRepo.Delete(id);
+            _unitofwork.Bookrepo.Delete(id);
             _unitofwork.SaveChanges();
             TempData["SuccessMessage"] = "Book deleted successfully.";
             return RedirectToAction("Index");
@@ -72,9 +73,9 @@ namespace MvcITIProject.Controllers
 
             BookModelView model = new BookModelView
             {
-                Categories = _unitofwork.Repository<Category>().GetAll().Select(c => new SelectListItem { Value = c.Id.ToString(), Text = c.CatName }),
-                Publishers = _unitofwork.Repository<Publisher>().GetAll().Select(p => new SelectListItem { Value = p.Id.ToString(), Text = p.Name}),
-                Shelves = _unitofwork.Repository<Shelf>().GetAll().Select(s => new SelectListItem { Value = s.Code, Text = s.Code}),
+                Categories = _unitofwork.Repositries<Category>().GetAll().Select(c => new SelectListItem { Value = c.Id.ToString(), Text = c.CatName }),
+                Publishers = _unitofwork.Repositries<Publisher>().GetAll().Select(p => new SelectListItem { Value = p.Id.ToString(), Text = p.Name}),
+                Shelves = _unitofwork.Repositries<Shelf>().GetAll().Select(s => new SelectListItem { Value = s.Code, Text = s.Code}),
             };
             return View("Add",model);
         }
@@ -83,9 +84,9 @@ namespace MvcITIProject.Controllers
         {
             if (!ModelState.IsValid)
             {
-                newbook.Categories = _unitofwork.Repository<Category>().GetAll().Select(c => new SelectListItem { Value = c.Id.ToString(), Text = c.CatName });
-                newbook.Publishers = _unitofwork.Repository<Publisher>().GetAll().Select(p => new SelectListItem { Value = p.Id.ToString(), Text = p.Name });
-                newbook.Shelves = _unitofwork.Repository<Shelf>().GetAll().Select(s => new SelectListItem { Value = s.Code, Text = s.Code });
+                newbook.Categories = _unitofwork.Repositries<Category>().GetAll().Select(c => new SelectListItem { Value = c.Id.ToString(), Text = c.CatName });
+                newbook.Publishers = _unitofwork.Repositries<Publisher>().GetAll().Select(p => new SelectListItem { Value = p.Id.ToString(), Text = p.Name });
+                newbook.Shelves = _unitofwork.Repositries<Shelf>().GetAll().Select(s => new SelectListItem { Value = s.Code, Text = s.Code });
                 return View("Add", newbook);
             }
 
@@ -97,7 +98,7 @@ namespace MvcITIProject.Controllers
                 ShelfCode = newbook.ShelfCode,
             };
 
-            _unitofwork.BookRepo.Add(book);
+            _unitofwork.Bookrepo.Add(book);
             _unitofwork.SaveChanges();
 
             TempData["SuccessMessage"] = "Book added successfully.";
@@ -106,7 +107,7 @@ namespace MvcITIProject.Controllers
 
         public IActionResult Edit(int id)
         {
-            var book = _unitofwork.BookRepo.GetById(id);
+            var book = _unitofwork.Bookrepo.GetById(id);
 
             if (book == null)
                 return NotFound();
@@ -123,28 +124,45 @@ namespace MvcITIProject.Controllers
                 ShelfCodeNavigation = book.ShelfCodeNavigation,
                 Authors = book.Authors,
 
-                Categories = _unitofwork.Repository<Category>().GetAll().Select(c => new SelectListItem{Value = c.Id.ToString(),Text = c.CatName}),
-                Publishers = _unitofwork.Repository<Publisher>().GetAll().Select(p => new SelectListItem{Value = p.Id.ToString(),Text = p.Name}),
-                Shelves = _unitofwork.Repository<Shelf>().GetAll().Select(s => new SelectListItem{Value = s.Code,Text = s.Code})
+                Categories = _unitofwork.Repositries<Category>().GetAll().Select(c => new SelectListItem{Value = c.Id.ToString(),Text = c.CatName}),
+                Publishers = _unitofwork.Repositries<Publisher>().GetAll().Select(p => new SelectListItem{Value = p.Id.ToString(),Text = p.Name}),
+                Shelves = _unitofwork.Repositries<Shelf>().GetAll().Select(s => new SelectListItem{Value = s.Code,Text = s.Code})
             };
 
             return View("Edit", viewModel);
         }
 
-        public IActionResult SaveEdit(Book Editedbook)
+        [HttpPost]
+        public IActionResult SaveEdit(BookModelView Editedbook)
         {
             if (!ModelState.IsValid)
             {
+                Editedbook.Categories = _unitofwork.Repositries<Category>().GetAll().Select(c => new SelectListItem { Value = c.Id.ToString(), Text = c.CatName });
+                Editedbook.Publishers = _unitofwork.Repositries<Publisher>().GetAll().Select(p => new SelectListItem { Value = p.Id.ToString(), Text = p.Name });
+                Editedbook.Shelves = _unitofwork.Repositries<Shelf>().GetAll().Select(s => new SelectListItem { Value = s.Code, Text = s.Code });
+
                 return View("Edit", Editedbook);
             }
-            _unitofwork.BookRepo.Update(Editedbook);
+
+            Book updatedBook = new Book
+            {
+                Id = Editedbook.Id,
+                Title = Editedbook.Title,
+                CatId = Editedbook.CatId,
+                PublisherId = Editedbook.PublisherId,
+                ShelfCode = Editedbook.ShelfCode
+            };
+
+            _unitofwork.Bookrepo.Update(updatedBook);
             _unitofwork.SaveChanges();
-            TempData["SuccessMessage"] = "Book Edited successfully.";
-            return RedirectToAction("index");
+
+            TempData["SuccessMessage"] = "Book updated successfully.";
+            return RedirectToAction("Index");
         }
+
         public IActionResult Details(int id)
         {
-            var book = _unitofwork.BookRepo.GetById(id);
+            var book = _unitofwork.Bookrepo.GetById(id);
             if (book == null) return NotFound();
 
             var model = new BookModelView
@@ -161,7 +179,17 @@ namespace MvcITIProject.Controllers
             return View("Details", model);
         }
 
+        [AcceptVerbs("GET", "POST")]
+        public IActionResult IsTitleUnique(string title, int id = 0)
+        {
+            var exists = _unitofwork.Bookrepo.GetAll().Any(b => b.Title == title && b.Id != id);
 
+            if (exists)
+            {
+                return Json($"The title \"{title}\" is already used.");
+            }
 
+            return Json(true);
+        }
     }
 }
