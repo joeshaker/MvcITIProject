@@ -48,6 +48,12 @@
                     <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">
                         <i class="bi bi-pencil-square me-1"></i> Edit
                     </a>
+                    <form asp-action="Delete" asp-route-id="@Model.Id" method="post">
+                        <button type="submit" class="btn btn-danger">
+                            <i class="bi bi-trash me-1"></i> Delete
+                        </button>
+                    </form>
+
                     <a asp-action="Index" class="btn btn-secondary">
                         <i class="bi bi-arrow-left me-1"></i> Back to List
                     </a>
