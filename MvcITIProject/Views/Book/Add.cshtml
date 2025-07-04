@@ -45,6 +45,12 @@
                             <span asp-validation-for="ShelfCode" class="text-danger small"></span>
                         </div>
 
+                        <div class="mb-3">
+                            <label asp-for="BookLink" class="form-label"></label>
+                            <input asp-for="BookLink" class="form-control" placeholder="Enter book Link" />
+                            <span asp-validation-for="BookLink" class="text-danger small"></span>
+                        </div>
+
                         <div class="d-grid">
                             <button type="submit" class="btn btn-success">
                                 <i class="bi bi-save me-1"></i> Create

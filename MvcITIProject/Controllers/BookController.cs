@@ -42,7 +42,8 @@ namespace MvcITIProject.Controllers
                     Cat = b.Cat,
                     Publisher = b.Publisher,
                     ShelfCodeNavigation = b.ShelfCodeNavigation,
-                    Authors = b.Authors
+                    Authors = b.Authors,
+                    BookLink = b.BookLink
                 }).ToList();
 
             ViewBag.TotalPages = (int)Math.Ceiling((double)totalBooks / pageSize);
@@ -95,6 +96,7 @@ namespace MvcITIProject.Controllers
                 CatId = newbook.CatId,
                 PublisherId = newbook.PublisherId,
                 ShelfCode = newbook.ShelfCode,
+                BookLink=newbook.BookLink
             };
 
             _unitofwork.Bookrepo.Add(book);
@@ -122,6 +124,7 @@ namespace MvcITIProject.Controllers
                 Publisher = book.Publisher,
                 ShelfCodeNavigation = book.ShelfCodeNavigation,
                 Authors = book.Authors,
+                BookLink = book.BookLink,
 
                 Categories = _unitofwork.Repository<Category>().GetAll().Select(c => new SelectListItem{Value = c.Id.ToString(),Text = c.CatName}),
                 Publishers = _unitofwork.Repository<Publisher>().GetAll().Select(p => new SelectListItem{Value = p.Id.ToString(),Text = p.Name}),
@@ -137,6 +140,7 @@ namespace MvcITIProject.Controllers
             {
                 return View("Edit", Editedbook);
             }
+
             _unitofwork.Bookrepo.Update(Editedbook);
             _unitofwork.SaveChanges();
             TempData["SuccessMessage"] = "Book Edited successfully.";
@@ -156,7 +160,8 @@ namespace MvcITIProject.Controllers
                 ShelfCode = book.ShelfCode,
                 Cat = book.Cat,
                 Publisher = book.Publisher,
-                ShelfCodeNavigation = book.ShelfCodeNavigation
+                ShelfCodeNavigation = book.ShelfCodeNavigation,
+                BookLink = book.BookLink
             };
             return View("Details", model);
         }
