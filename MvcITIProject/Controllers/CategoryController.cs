@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using MvcITIProject.Models;
 using MvcITIProject.ModelView;
 using MvcITIProject.UnitOfWorks;
@@ -55,6 +56,7 @@ namespace MvcITIProject.Controllers
         // POST: Category/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "admin")]
         public IActionResult Create(Category category)
         {
             if (ModelState.IsValid)
@@ -66,6 +68,7 @@ namespace MvcITIProject.Controllers
             return View(category);
         }
         // GET: Category/Edit/5
+        [Authorize(Roles = "admin")]
         public IActionResult Edit(int id)
         {
             var category = _unitOfWork.CategoryRepo.GetById(id);
@@ -78,6 +81,7 @@ namespace MvcITIProject.Controllers
         // POST: Category/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "admin")]
         public IActionResult Edit(int id, Category category)
         {
             if (id != category.Id)
@@ -94,6 +98,7 @@ namespace MvcITIProject.Controllers
             return View(category);
         }
         // GET: Category/Delete/5
+        [Authorize(Roles = "admin")]
         public IActionResult Delete(int id)
         {
             var category = _unitOfWork.CategoryRepo.GetById(id);
@@ -112,6 +117,7 @@ namespace MvcITIProject.Controllers
             return View(viewModel);
         }
         // POST: Category/Delete/5
+        [Authorize(Roles = "admin")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(int id)
