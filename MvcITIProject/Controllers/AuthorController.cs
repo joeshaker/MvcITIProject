@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.Blazor;
 using MvcITIProject.Models;
@@ -30,6 +31,8 @@ namespace MvcITIProject.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "admin")]
+
         public IActionResult Add(Author author)
         {
             if (ModelState.IsValid)
@@ -55,6 +58,8 @@ namespace MvcITIProject.Controllers
             return View(author);
         }
 
+
+        [Authorize(Roles = "admin")]
 
         public IActionResult Delete(int id)
         {
