@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+@using MvcITIProject.Models
+@inject SignInManager<ApplicationUser> signInManager
+@inject UserManager<ApplicationUser> userManager
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -17,125 +21,125 @@
     <!-- Custom CSS -->
     <style>
         :root {
-            --primary-color: #3498db;
-            --secondary-color: #2c3e50;
-            --accent-color: #e74c3c;
-            --light-color: #f8f9fa;
-            --dark-color: #212529;
+        --primary-color: #3498db;
+        --secondary-color: #2c3e50;
+        --accent-color: #e74c3c;
+        --light-color: #f8f9fa;
+        --dark-color: #212529;
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f5f5f5;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f5f5f5;
         }
 
         .navbar-brand {
-            font-weight: 700;
-            font-size: 1.5rem;
+        font-weight: 700;
+        font-size: 1.5rem;
         }
 
         .navbar {
-            background-color: var(--secondary-color) !important;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        background-color: var(--secondary-color) !important;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
 
         .sidebar {
-            background-color: white;
-            min-height: calc(100vh - 56px);
-            box-shadow: 2px 0 10px rgba(0,0,0,0.05);
-            position: sticky;
-            top: 56px;
+        background-color: white;
+        min-height: calc(100vh - 56px);
+        box-shadow: 2px 0 10px rgba(0,0,0,0.05);
+        position: sticky;
+        top: 56px;
         }
 
-            .sidebar .nav-link {
-                color: var(--dark-color);
-                border-radius: 0.25rem;
-                margin: 0.25rem 0;
-                font-weight: 500;
-            }
+        .sidebar .nav-link {
+        color: var(--dark-color);
+        border-radius: 0.25rem;
+        margin: 0.25rem 0;
+        font-weight: 500;
+        }
 
-                .sidebar .nav-link:hover,
-                .sidebar .nav-link.active {
-                    background-color: var(--primary-color);
-                    color: white;
-                }
+        .sidebar .nav-link:hover,
+        .sidebar .nav-link.active {
+        background-color: var(--primary-color);
+        color: white;
+        }
 
-                .sidebar .nav-link i {
-                    margin-right: 0.5rem;
-                    width: 20px;
-                    text-align: center;
-                }
+        .sidebar .nav-link i {
+        margin-right: 0.5rem;
+        width: 20px;
+        text-align: center;
+        }
 
         .main-content {
-            padding: 2rem;
-            background-color: white;
-            border-radius: 0.5rem;
-            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
-            margin-bottom: 2rem;
+        padding: 2rem;
+        background-color: white;
+        border-radius: 0.5rem;
+        box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+        margin-bottom: 2rem;
         }
 
         .page-header {
-            border-bottom: 1px solid #eee;
-            padding-bottom: 1rem;
-            margin-bottom: 2rem;
+        border-bottom: 1px solid #eee;
+        padding-bottom: 1rem;
+        margin-bottom: 2rem;
         }
 
         .btn-primary {
-            background-color: var(--primary-color);
-            border-color: var(--primary-color);
+        background-color: var(--primary-color);
+        border-color: var(--primary-color);
         }
 
         .btn-outline-primary {
-            color: var(--primary-color);
-            border-color: var(--primary-color);
+        color: var(--primary-color);
+        border-color: var(--primary-color);
         }
 
-            .btn-outline-primary:hover {
-                background-color: var(--primary-color);
-                color: white;
-            }
+        .btn-outline-primary:hover {
+        background-color: var(--primary-color);
+        color: white;
+        }
 
         .table th {
-            background-color: var(--secondary-color);
-            color: white;
+        background-color: var(--secondary-color);
+        color: white;
         }
 
         .card {
-            border: none;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            transition: transform 0.2s;
+        border: none;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        transition: transform 0.2s;
         }
 
-            .card:hover {
-                transform: translateY(-5px);
-            }
+        .card:hover {
+        transform: translateY(-5px);
+        }
 
         .card-header {
-            background-color: var(--secondary-color);
-            color: white;
+        background-color: var(--secondary-color);
+        color: white;
         }
 
         .fixed-footer {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: white;
-            padding: 15px 0;
-            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
-            z-index: 1030;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: white;
+        padding: 15px 0;
+        box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+        z-index: 1030;
         }
 
         .content-container {
-            padding-bottom: 80px;
+        padding-bottom: 80px;
         }
 
         /* Toast notifications */
         .toast-container {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 1100;
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 1100;
         }
     </style>
 
@@ -173,67 +177,96 @@
                     <ul class="nav flex-column">
                         <li class="nav-item">
                             <a class="nav-link @(ViewContext.RouteData.Values["Controller"].ToString() == "Home" ? "active" : "")"
-                               asp-controller="Home" asp-action="Index">
+                            asp-controller="Home" asp-action="Index">
                                 <i class="bi bi-house-door-fill"></i>Home
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link @(ViewContext.RouteData.Values["Controller"].ToString() == "Category" ? "active" : "")"
-                               asp-controller="Category" asp-action="Index">
+                            asp-controller="Category" asp-action="Index">
                                 <i class="bi bi-collection"></i> Categories
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link @(ViewContext.RouteData.Values["Controller"].ToString() == "Book" ? "active" : "")"
-                               asp-controller="Book" asp-action="Index">
+                            asp-controller="Book" asp-action="Index">
                                 <i class="bi bi-book"></i> Books
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link @(ViewContext.RouteData.Values["Controller"].ToString() == "Author" ? "active" : "")"
-                               asp-controller="Author" asp-action="ShowAll">
+                            asp-controller="Author" asp-action="ShowAll">
                                 <i class="bi bi-person-badge"></i> Authors
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link @(ViewContext.RouteData.Values["Controller"].ToString() == "Floor" ? "active" : "")"
-                               asp-controller="Floor" asp-action="Index">
+                            asp-controller="Floor" asp-action="Index">
                                 <i class="bi bi-bar-chart-steps"></i> Floor
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link @(ViewContext.RouteData.Values["Controller"].ToString() == "Publisher" ? "active" : "")"
-                               asp-controller="Publisher" asp-action="Index">
+                            asp-controller="Publisher" asp-action="Index">
                                 <i class="bi bi-file-person"></i> Publisher
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link @(ViewContext.RouteData.Values["Controller"].ToString() == "Shelf" ? "active" : "")"
-                               asp-controller="Shelf" asp-action="Index">
+                            asp-controller="Shelf" asp-action="Index">
                                 <i class="bi bi-bookshelf"></i> Shelf
                             </a>
                         </li>
                         <li class="nav-item mt-3">
                             <hr class="dropdown-divider">
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link @(ViewContext.RouteData.Values["Controller"].ToString() == "Login" ? "active" : "")"
-                               asp-controller="Login" asp-action="Index">
-                                <i class="bi bi-box-arrow-in-right"></i> Login
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link @(ViewContext.RouteData.Values["Controller"].ToString() == "Logout" ? "active" : "")"
-                               asp-controller="Logout" asp-action="Index">
-                                <i class="bi bi-box-arrow-right"></i> Logout
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link @(ViewContext.RouteData.Values["Controller"].ToString() == "SignUp" ? "active" : "")"
-                               asp-controller="SignUp" asp-action="Index">
-                                <i class="bi bi-door-open"></i> Sign Up
-                            </a>
-                        </li>
+                        @if (signInManager.IsSignedIn(User))
+                        {
+                            var currentUser = await userManager.GetUserAsync(User);
+                            var roles = await userManager.GetRolesAsync(currentUser);
+
+                            if (roles.Contains("admin"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-controller="Account" asp-action="Register">Register User</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-controller="Account" asp-action="RegisterForAdmins">Register Admin</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-controller="Role" asp-action="List">Roles List</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-controller="Role" asp-action="Create">Create Role</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-controller="UserRole" asp-action="Index">Users & Roles</a>
+                                </li>
+                            }
+
+                            <li class="nav-item">
+                                <form asp-controller="Account" asp-action="Logout" method="post" class="d-inline">
+                                    <button type="submit" class="btn btn-link nav-link">Logout</button>
+                                </form>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link @(ViewContext.RouteData.Values["Controller"].ToString() == "Login" ? "active" : "")"
+                                asp-controller="Account" asp-action="Login">
+                                    <i class="bi bi-box-arrow-in-right"></i> Login
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link @(ViewContext.RouteData.Values["Controller"].ToString() == "SignUp" ? "active" : "")"
+                                asp-controller="Account" asp-action="Register">
+                                    <i class="bi bi-door-open"></i> Sign Up
+                                </a>
+                            </li>
+                        }
+
                     </ul>
                 </div>
             </div>

@@ -24,7 +24,10 @@
                     {
                         foreach (var book in Model.Books)
                         {
-                            <li>@book.Title</li>
+                            <li>
+                                <a asp-action="Details" asp-controller="Book" asp-route-id="@book.Id" class=" text-success">@book.Title</a>
+
+                                </li>
                         }
                     }
                     else
