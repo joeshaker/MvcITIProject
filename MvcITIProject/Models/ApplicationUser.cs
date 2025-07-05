@@ -2,7 +2,7 @@
 
 namespace MvcITIProject.Models
 {
-    public class ApplicationUser:IdentityUser
+    public class ApplicationUser : IdentityUser
     {
         public string? Addresses { get; set; }
 

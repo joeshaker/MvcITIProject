@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using MvcITIProject.Models;
 using MvcITIProject.Repositories;
@@ -15,11 +16,13 @@ namespace MvcITIProject
             builder.Services.AddControllersWithViews();
             //Add Connectionstring and UnitOfWork
 
-            builder.Services.AddDbContext<LibraryContext>(op => op.UseSqlServer(builder.Configuration.GetConnectionString("default")).UseLazyLoadingProxies());
+            builder.Services.AddDbContext<LibraryContext>(op => op.UseSqlServer(builder.Configuration.GetConnectionString("emaddb")).UseLazyLoadingProxies());
 
 
             builder.Services.AddScoped<UnitOfWork>();
             builder.Services.AddScoped<AuthorRepository>();
+            builder.Services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<LibraryContext>();
+
 
             var app = builder.Build();
 
