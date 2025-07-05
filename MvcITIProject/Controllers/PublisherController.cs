@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using MvcITIProject.Models;
 using MvcITIProject.ModelView;
 using MvcITIProject.UnitOfWorks;
@@ -59,12 +60,14 @@ namespace MvcITIProject.Controllers
             return View(viewModels);
         }
         // GET: publisher/Create
+        [Authorize(Roles = "admin")]
         public IActionResult Create()
         {
             return View();
         }
         // POST: publisher/Create
         [HttpPost]
+        [Authorize(Roles = "admin")]
         [ValidateAntiForgeryToken]
         public IActionResult Create(Publisher publisher)
         {
@@ -77,6 +80,7 @@ namespace MvcITIProject.Controllers
             return View(publisher);
         }
         // GET: publisher/Edit/5
+        [Authorize(Roles = "admin")]
         public IActionResult Edit(int id)
         {
             var publisher = _unitofwork.Publisherrepo.GetById(id);
@@ -88,6 +92,7 @@ namespace MvcITIProject.Controllers
         }
         // POST: publisher/Edit/5
         [HttpPost]
+        [Authorize(Roles = "admin")]
         [ValidateAntiForgeryToken]
         public IActionResult Edit(int id, Publisher publisher)
         {
@@ -105,6 +110,7 @@ namespace MvcITIProject.Controllers
             return View(publisher);
         }
         // GET: publisher/Delete/5
+        [Authorize(Roles = "admin")]
         public IActionResult Delete(int id)
         {
             var publisher = _unitofwork.Publisherrepo.GetById(id);
@@ -124,7 +130,9 @@ namespace MvcITIProject.Controllers
             return View(viewModel);
         }
         // POST: publisher/Delete/5
+
         [HttpPost, ActionName("Delete")]
+        [Authorize(Roles = "admin")]
         [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(int id)
         {
