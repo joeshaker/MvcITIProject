@@ -1,0 +1,22 @@
+﻿@model MvcITIProject.ModelView.RoleAssignmentViewModel
+
+<h2>Edit Roles for User</h2>
+
+<form asp-action="Edit" method="post">
+    <input type="hidden" asp-for="UserId" />
+    <div class="mb-3">
+        @foreach (var role in Model.AllRoles)
+        {
+            <div class="form-check">
+                <input type="checkbox"
+                       name="SelectedRoles"
+                       value="@role"
+                       class="form-check-input"
+                @(Model.SelectedRoles.Contains(role) ? "checked" : "") />
+                <label class="form-check-label">@role</label>
+            </div>
+        }
+    </div>
+    <button type="submit" class="btn btn-primary">Update Roles</button>
+    <a asp-action="Index" class="btn btn-secondary ms-2">Back</a>
+</form>

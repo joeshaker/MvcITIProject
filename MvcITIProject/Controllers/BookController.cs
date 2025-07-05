@@ -157,7 +157,7 @@ namespace MvcITIProject.Controllers
             };
 
             _unitofwork.Bookrepo.Update(updatedBook);
-            _unitofwork.Bookrepo.Update(Editedbook);
+            //_unitofwork.Bookrepo.Update(Editedbook);
             _unitofwork.SaveChanges();
 
             TempData["SuccessMessage"] = "Book updated successfully.";
