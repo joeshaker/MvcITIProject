@@ -16,7 +16,7 @@ namespace MvcITIProject
             builder.Services.AddControllersWithViews();
             //Add Connectionstring and UnitOfWork
 
-            builder.Services.AddDbContext<LibraryContext>(op => op.UseSqlServer(builder.Configuration.GetConnectionString("dod")).UseLazyLoadingProxies());
+            builder.Services.AddDbContext<LibraryContext>(op => op.UseSqlServer(builder.Configuration.GetConnectionString("yous")).UseLazyLoadingProxies());
 
 
             builder.Services.AddScoped<UnitOfWork>();
