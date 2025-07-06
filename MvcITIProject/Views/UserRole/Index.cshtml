@@ -1,0 +1,25 @@
+﻿@model List<MvcITIProject.ModelView.UserRolesViewModel>
+
+<h2>User Role Management</h2>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>User</th>
+            <th>Roles</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td>@user.UserName</td>
+                <td>@string.Join(", ", user.Roles)</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@user.UserId" class="btn btn-sm btn-warning">Edit Roles</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
