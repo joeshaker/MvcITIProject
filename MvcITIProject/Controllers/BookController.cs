@@ -153,7 +153,8 @@ namespace MvcITIProject.Controllers
                 Title = Editedbook.Title,
                 CatId = Editedbook.CatId,
                 PublisherId = Editedbook.PublisherId,
-                ShelfCode = Editedbook.ShelfCode
+                ShelfCode = Editedbook.ShelfCode,
+                BookLink=Editedbook.BookLink
             };
 
             _unitofwork.Bookrepo.Update(updatedBook);
