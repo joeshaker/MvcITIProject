@@ -4,21 +4,22 @@
     ViewData["Title"] = "Edit Book";
 }
 
-<div class="container py-5 mb-4">
+<div class="container mt-4 mb-5">
     <div class="row justify-content-center">
-        <div class="col-lg-6">
-            <div class="card shadow rounded">
-                <div class="card-header bg-warning text-dark">
-                    <h4 class="mb-0"><i class="bi bi-pencil-square me-2"></i>Edit Book</h4>
+        <div class="col-lg-7 col-md-10">
+            <div class="card shadow rounded-4">
+                <div class="card-header bg-warning text-dark rounded-top-4">
+                    <h4 class="mb-0">
+                        <i class="bi bi-pencil-square me-2"></i> Edit Book
+                    </h4>
                 </div>
                 <div class="card-body">
                     <form asp-action="SaveEdit">
                         <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
-
                         <input type="hidden" asp-for="Id" />
 
                         <div class="mb-3">
-                            <label asp-for="Title" class="form-label"></label>
+                            <label asp-for="Title" class="form-label">Title</label>
                             <input asp-for="Title" class="form-control" placeholder="Enter book title" />
                             <span asp-validation-for="Title" class="text-danger small"></span>
                         </div>
@@ -48,26 +49,30 @@
                         </div>
 
                         <div class="mb-3">
-                            <label asp-for="BookLink" class="form-label"></label>
-                            <input asp-for="BookLink" class="form-control" placeholder="Enter book Link" />
+                            <label asp-for="BookLink" class="form-label">Book Link</label>
+                            <input asp-for="BookLink" class="form-control" placeholder="Enter book link URL" />
                             <span asp-validation-for="BookLink" class="text-danger small"></span>
                         </div>
 
-                        <div class="d-grid">
+                        <div class="d-grid mt-4">
                             <button type="submit" class="btn btn-primary">
                                 <i class="bi bi-save me-1"></i> Save Changes
                             </button>
                         </div>
                     </form>
-                    <div class="mt-3 text-end">
-                        <a asp-action="Index" class="btn btn-secondary btn-sm">
+
+                    <div class="mt-4 text-end">
+                        <a asp-action="Index" class="btn btn-outline-secondary btn-sm">
                             <i class="bi bi-arrow-left me-1"></i> Back to List
                         </a>
                     </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
+
+
 
 @section Scripts {
     @{

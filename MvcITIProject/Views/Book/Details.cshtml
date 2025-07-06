@@ -4,15 +4,17 @@
     ViewData["Title"] = "Book Details";
 }
 
-<div class="container py-5">
+<div class="container mt-4 mb-5">
     <div class="row justify-content-center">
-        <div class="col-lg-8">
-            <div class="card shadow rounded">
-                <div class="card-header bg-info text-white">
-                    <h4 class="mb-0"><i class="bi bi-info-circle me-2"></i>Book Details</h4>
+        <div class="col-lg-8 col-md-10">
+            <div class="card shadow rounded-4">
+                <div class="card-header bg-info text-white rounded-top-4">
+                    <h4 class="mb-0">
+                        <i class="bi bi-info-circle me-2"></i> Book Details
+                    </h4>
                 </div>
                 <div class="card-body">
-                    <dl class="row mb-0">
+                    <dl class="row">
                         <dt class="col-sm-4 fw-semibold text-muted">ID</dt>
                         <dd class="col-sm-8">@Model.Id</dd>
 
@@ -23,7 +25,7 @@
                         <dd class="col-sm-8">@Model.Cat?.CatName</dd>
 
                         <dt class="col-sm-4 fw-semibold text-muted">Publisher</dt>
-                        <dd class="col-sm-8">@Model.Publisher?.Name</dd>
+                        <dd class="col-sm-8">@Model.Publisher?.Name </dd>
 
                         <dt class="col-sm-4 fw-semibold text-muted">Shelf Code</dt>
                         <dd class="col-sm-8">@Model.ShelfCodeNavigation?.Code</dd>
@@ -32,29 +34,30 @@
                         <dd class="col-sm-8">
                             @if (!string.IsNullOrWhiteSpace(Model.BookLink))
                             {
-                                <a href="@Model.BookLink" target="_blank">@Model.BookLink</a>
+                                <a href="@Model.BookLink" target="_blank" rel="noopener noreferrer">@Model.BookLink</a>
                             }
                             else
                             {
                                 <span class="text-muted">This book has no link</span>
                             }
                         </dd>
-
-
-
                     </dl>
                 </div>
-                <div class="card-footer d-flex justify-content-end gap-2">
-                    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">
-                        <i class="bi bi-pencil-square me-1"></i> Edit
-                    </a>
-                    <form asp-action="Delete" asp-route-id="@Model.Id" method="post">
-                        <button type="submit" class="btn btn-danger">
-                            <i class="bi bi-trash me-1"></i> Delete
-                        </button>
-                    </form>
 
-                    <a asp-action="Index" class="btn btn-secondary">
+                <div class="card-footer d-flex justify-content-end gap-2">
+                    @if (User.IsInRole("admin"))
+                    {
+                        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">
+                            <i class="bi bi-pencil-square me-1"></i> Edit
+                        </a>
+                        <form asp-action="Delete" asp-route-id="@Model.Id" method="post" class="d-inline">
+                            <button type="submit" class="btn btn-danger">
+                                <i class="bi bi-trash me-1"></i> Delete
+                            </button>
+                        </form>
+                    }
+
+                    <a asp-action="Index" class="btn btn-outline-secondary">
                         <i class="bi bi-arrow-left me-1"></i> Back to List
                     </a>
                 </div>

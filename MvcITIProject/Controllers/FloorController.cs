@@ -1,8 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using MvcITIProject.IRepositories;
 using MvcITIProject.Models;
-using MvcITIProject.UnitOfWorks;
 using MvcITIProject.ModelView;
+using MvcITIProject.UnitOfWorks;
 
 namespace MvcITIProject.Controllers
 {
@@ -51,6 +52,7 @@ namespace MvcITIProject.Controllers
         }
 
         // GET: Floor/Create
+        [Authorize(Roles = "admin")]
         public IActionResult Create()
         {
             return View(new FloorCreateViewModel());
@@ -58,6 +60,7 @@ namespace MvcITIProject.Controllers
 
         // POST: Floor/Create
         [HttpPost]
+        [Authorize(Roles = "admin")]
         [ValidateAntiForgeryToken]
         public IActionResult Create(FloorCreateViewModel model)
         {
@@ -81,6 +84,7 @@ namespace MvcITIProject.Controllers
         }
 
         // GET: Floor/Edit/5
+        [Authorize(Roles = "admin")]
         public IActionResult Edit(int id)
         {
             var floor = _unitOfWork.Floors.GetById(id);
@@ -100,6 +104,7 @@ namespace MvcITIProject.Controllers
         }
 
         // POST: Floor/Edit/5
+        [Authorize(Roles = "admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Edit(int id, FloorEditViewModel model)
@@ -131,6 +136,7 @@ namespace MvcITIProject.Controllers
         }
 
         // GET: Floor/Delete/5
+        [Authorize(Roles = "admin")]
         public IActionResult Delete(int id)
         {
             var floor = _unitOfWork.Floors.GetById(id);
@@ -151,6 +157,7 @@ namespace MvcITIProject.Controllers
         }
 
         // POST: Floor/Delete/5
+        [Authorize(Roles = "admin")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(int id)
