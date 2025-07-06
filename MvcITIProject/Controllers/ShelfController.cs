@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using MvcITIProject.Models;
 using MvcITIProject.ModelView.ShelfModelView;
@@ -43,6 +44,9 @@ namespace MvcITIProject.Controllers
             return View(addShelfViewModel);
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "admin")]
+
         public IActionResult AddShelf(AddShelfViewModel addShelfView)
         {
             if (ModelState.IsValid)
@@ -64,6 +68,7 @@ namespace MvcITIProject.Controllers
             }).ToList();
             return View("AddViewShelf", addShelfView);
         }
+        [Authorize(Roles = "admin")]
 
         public IActionResult EditShelfView(string code)
         {
@@ -82,6 +87,9 @@ namespace MvcITIProject.Controllers
             return View(addShelfViewModel);
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "admin")]
+
         public IActionResult EditShelf(AddShelfViewModel addShelfView)
         {
             if (ModelState.IsValid)
@@ -105,6 +113,8 @@ namespace MvcITIProject.Controllers
             return View("EditShelfView", addShelfView);
         }
 
+        [Authorize(Roles = "admin")]
+
         public IActionResult DeleteView(string code)
         {
             List<Floor>? floor = _UnitOfWork.Repositries<Floor>().GetAll().ToList();
@@ -122,6 +132,7 @@ namespace MvcITIProject.Controllers
             return View(addShelfViewModel);
 
         }
+        [Authorize(Roles = "admin")]
 
 
         public IActionResult DeleteShelf(string code) {

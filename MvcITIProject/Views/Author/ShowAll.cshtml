@@ -1,34 +1,62 @@
 ﻿@model List<Author>
 
-<h2>All Authors</h2>
+@{
+    ViewData["Title"] = "Authors";
+}
 
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Books Count</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var author in Model)
-        {
-            <tr>
-                <td>@author.Id</td>
-                <td>@author.Name</td>
-                <td>@(author.Books?.Count ?? 0)</td>
-                <td>
-                    <a asp-action="Details" asp-route-id="@author.Id" class="btn btn-info btn-sm">
-                        Details
-                    </a>
-                    <a asp-action="Delete" asp-route-id="@author.Id" class="btn btn-danger btn-sm">
-                        Delete
-                    </a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+<div class="container mt-2">
+    <h1>All Authors</h1>
 
-<a asp-action="AddView" class="btn btn-primary">Add New Author</a>
+    <!-- Create Button -->
+    <div class="row mb-4">
+        <div class="col text-end">
+            @if (User.IsInRole("admin"))
+            {
+                <a asp-action="AddView" class="btn btn-success">➕ Add New Author</a>
+            }
+        </div>
+    </div>
+
+    <!-- Authors Table -->
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered table-hover text-center align-middle">
+            <thead class="thead-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Books Count</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.Any())
+                {
+                    @foreach (var author in Model)
+                    {
+                        <tr>
+                            <td>@author.Id</td>
+                            <td>@author.Name</td>
+                            <td>@(author.Books?.Count ?? 0)</td>
+                            <td>
+                                <a asp-action="Details" asp-route-id="@author.Id"
+                                   class="btn btn-sm btn-info me-1">Details</a>
+
+                                @if (User.IsInRole("admin"))
+                                {
+                                    <a asp-action="Delete" asp-route-id="@author.Id"
+                                       class="btn btn-sm btn-danger">Delete</a>
+                                }
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="4" class="text-center">No authors found</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
