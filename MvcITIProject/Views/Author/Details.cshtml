@@ -21,7 +21,7 @@ else
 }
 @if (User.IsInRole("admin"))
 {
-    <a asp-action="Add" class="btn btn-secondary">Add Another Author</a>
+    <a asp-action="AddView" class="btn btn-secondary">Add Another Author</a>
     <a asp-action="showAll" class="btn btn-primary">Back to Authors</a>
     <a asp-action="AddView" asp-controller="BookAuthor" asp-route-authorId="@Model.Id" class="btn btn-info">
         Add Books

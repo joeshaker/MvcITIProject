@@ -1,4 +1,6 @@
-﻿@{
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> signInManager
+@{
     ViewData["Title"] = "Home";
     ViewData["Icon"] = "bi bi-house-door";
 }
@@ -10,9 +12,16 @@
                 <h1 class="display-4 fw-bold mb-4">Discover Your Next Great Read</h1>
                 <p class="lead mb-4">Explore our vast collection of books, e-resources, and more at your community library.</p>
                 <div class="d-flex gap-3">
-                    <a asp-controller="Book" asp-action="Index" class="btn btn-primary btn-lg px-4">
-                        <i class="bi bi-search me-2"></i>Browse Catalog
-                    </a>
+                    @if(signInManager.IsSignedIn(User)){
+                        <a asp-controller="Book" asp-action="Index" class="btn btn-primary btn-lg px-4">
+                            <i class="bi bi-search me-2"></i>Browse Catalog
+                        </a>
+                    }else{
+                        <a asp-controller="Account" asp-action="Login" class="btn btn-primary btn-lg px-4">
+                            <i class="bi bi-search me-2"></i>Browse Catalog
+                        </a>
+                    }
+
                 </div>
             </div>
             <div class="col-lg-6 d-none d-lg-block">
